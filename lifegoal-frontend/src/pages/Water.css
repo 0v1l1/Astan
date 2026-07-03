@@ -1,0 +1,165 @@
+.water {
+  display: flex;
+  flex-direction: column;
+}
+
+.water-stats {
+  margin-bottom: 30px;
+}
+
+.water-card {
+  background-color: var(--card-bg);
+  border: 2px solid var(--primary-green);
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.water-progress {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.water-circle {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-ring {
+  transform: scaleX(-1);
+}
+
+.water-percentage {
+  position: absolute;
+  font-size: 36px;
+  font-weight: bold;
+  color: var(--primary-green);
+}
+
+.water-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.water-consumed {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--text-light);
+}
+
+.water-goal {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.add-water {
+  background-color: var(--card-bg);
+  border: 2px solid var(--primary-green);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.add-water .input-field {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.add-water .btn {
+  min-width: 150px;
+}
+
+.quick-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.quick-btn {
+  flex: 1;
+  background-color: var(--card-bg);
+  border: 2px solid var(--primary-green);
+  color: var(--primary-green);
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.quick-btn:hover {
+  background-color: var(--primary-green);
+  color: var(--dark-bg);
+}
+
+.history-section {
+  margin-top: 20px;
+}
+
+.history-section h3 {
+  font-size: 14px;
+  color: var(--primary-green);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-item {
+  background-color: var(--card-bg);
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.amount {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--primary-green);
+}
+
+.time {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .water-progress {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .water-circle {
+    width: 150px;
+    height: 150px;
+  }
+
+  .water-percentage {
+    font-size: 28px;
+  }
+
+  .add-water {
+    flex-direction: column;
+  }
+
+  .quick-buttons {
+    flex-wrap: wrap;
+  }
+}

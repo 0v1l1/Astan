@@ -1,0 +1,347 @@
+.workouts {
+  display: flex;
+  flex-direction: column;
+}
+
+.workouts-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.workouts-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--primary-green);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.templates-section,
+.new-template-section,
+.history-section {
+  margin-bottom: 30px;
+}
+
+.templates-section h3,
+.new-template-section h3,
+.history-section h3 {
+  font-size: 11px;
+  color: var(--primary-green);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.empty-message {
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 30px;
+  font-size: 13px;
+}
+
+.template-card {
+  background-color: rgba(30, 30, 30, 0.7);
+  border: 1px solid var(--primary-green);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  backdrop-filter: blur(15px);
+}
+
+.template-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.template-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s;
+}
+
+.delete-btn:hover {
+  color: #FF6B6B;
+}
+
+.template-exercises {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.exercise-info {
+  font-size: 12px;
+  color: var(--text-secondary);
+  padding: 6px 10px;
+  background-color: rgba(0, 255, 51, 0.05);
+  border-left: 2px solid var(--primary-green);
+  border-radius: 3px;
+}
+
+.template-form {
+  background-color: rgba(30, 30, 30, 0.7);
+  border: 1px solid var(--primary-green);
+  border-radius: 8px;
+  padding: 16px;
+  backdrop-filter: blur(15px);
+}
+
+.exercises-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.exercise-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.exercise-form .input-field:first-child {
+  margin-bottom: 0;
+}
+
+.exercise-inputs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group .input-field {
+  margin-bottom: 0;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.input-label {
+  position: absolute;
+  top: 2px;
+  left: 12px;
+  font-size: 7px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.input-small {
+  margin-bottom: 0 !important;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.btn-small {
+  padding: 8px 14px;
+  font-size: 11px;
+  border-radius: 6px;
+  min-width: auto;
+}
+
+.history-section {
+  margin-top: 30px;
+}
+
+.history-day {
+  background-color: rgba(30, 30, 30, 0.7);
+  border: 1px solid rgba(0, 255, 51, 0.2);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  backdrop-filter: blur(15px);
+}
+
+.history-date {
+  padding: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 255, 51, 0.05);
+  border-bottom: 1px solid rgba(0, 255, 51, 0.15);
+  transition: all 0.2s;
+}
+
+.history-date:hover {
+  background-color: rgba(0, 255, 51, 0.08);
+}
+
+.history-date span {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+.expand-icon {
+  color: var(--primary-green);
+  font-size: 10px;
+}
+
+.history-workouts {
+  padding: 12px;
+  background-color: var(--dark-bg);
+}
+
+.workout-log-item {
+  margin-bottom: 12px;
+  padding: 10px;
+  background-color: rgba(0, 255, 51, 0.05);
+  border-left: 2px solid var(--primary-green);
+  border-radius: 4px;
+}
+
+.workout-log-item:last-child {
+  margin-bottom: 0;
+}
+
+.log-time {
+  font-size: 11px;
+  color: var(--primary-green);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.log-exercise {
+  font-size: 12px;
+  color: var(--text-light);
+  padding: 4px 0;
+}
+
+.log-note {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0, 255, 51, 0.2);
+}
+
+.log-note strong {
+  color: var(--primary-green);
+  font-size: 11px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.note-view {
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 1.4;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.note-view p {
+  flex: 1;
+  margin: 0;
+}
+
+.note-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.note-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.note-textarea {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--primary-green);
+  border-radius: 4px;
+  color: var(--text-light);
+  padding: 6px;
+  font-size: 12px;
+  font-family: inherit;
+  resize: none;
+  min-height: 60px;
+}
+
+.note-textarea::placeholder {
+  color: var(--text-secondary);
+}
+
+.note-textarea:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 255, 51, 0.2);
+}
+
+.note-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.note-btn {
+  background: none;
+  border: 1px solid var(--primary-green);
+  color: var(--primary-green);
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.note-btn:hover {
+  background-color: rgba(0, 255, 51, 0.1);
+}
+
+.note-btn.delete {
+  border-color: #FF6B6B;
+  color: #FF6B6B;
+}
+
+.note-btn.delete:hover {
+  background-color: rgba(255, 107, 107, 0.1);
+}
+
+@media (max-width: 768px) {
+  .workouts-header h1 {
+    font-size: 24px;
+  }
+
+  .exercise-inputs {
+    grid-template-columns: 1fr;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+  }
+
+  .btn-small {
+    width: 100%;
+  }
+}
+
+

@@ -1,0 +1,258 @@
+.food {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-food {
+  background-color: rgba(50, 50, 50, 0.5);
+  border: 1px solid var(--primary-green);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(15px);
+}
+
+.meal-type-select {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.meal-type-select label {
+  font-size: 13px;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.meal-type-select select {
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--primary-green);
+  color: var(--text-light);
+  border-radius: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+  flex: 1;
+  font-size: 12px;
+}
+
+.add-food .btn {
+  width: 100%;
+}
+
+.today-food {
+  margin-bottom: 30px;
+}
+
+.today-food h3 {
+  font-size: 11px;
+  color: var(--primary-green);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.meal-section {
+  background-color: rgba(50, 50, 50, 0.5);
+  border: 1px solid rgba(0, 255, 51, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  backdrop-filter: blur(15px);
+}
+
+.meal-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 255, 51, 0.2);
+}
+
+.meal-icon {
+  font-size: 18px;
+}
+
+.meal-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.meal-count {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-left: auto;
+}
+
+.food-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.food-item {
+  padding: 8px;
+  background-color: rgba(0, 255, 51, 0.05);
+  border-left: 2px solid var(--primary-green);
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.food-name {
+  font-size: 12px;
+  color: var(--text-light);
+  flex: 1;
+}
+
+.food-edit {
+  width: 100%;
+}
+
+.food-edit-input {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--primary-green);
+  color: var(--text-light);
+  padding: 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.food-edit-input:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 255, 51, 0.2);
+}
+
+.food-actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.food-item:hover .food-actions {
+  opacity: 1;
+}
+
+.food-btn {
+  background: none;
+  border: 1px solid var(--primary-green);
+  color: var(--primary-green);
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.food-btn:hover {
+  background-color: rgba(0, 255, 51, 0.1);
+}
+
+.food-btn.delete {
+  border-color: #FF6B6B;
+  color: #FF6B6B;
+}
+
+.food-btn.delete:hover {
+  background-color: rgba(255, 107, 107, 0.1);
+}
+
+.empty-meal {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.history-section {
+  margin-top: 20px;
+}
+
+.history-section h3 {
+  font-size: 11px;
+  color: var(--primary-green);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.history-day {
+  background-color: rgba(50, 50, 50, 0.5);
+  border: 1px solid rgba(0, 255, 51, 0.2);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  backdrop-filter: blur(15px);
+}
+
+.history-date {
+  padding: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 255, 51, 0.05);
+  border-bottom: 1px solid rgba(0, 255, 51, 0.15);
+  transition: all 0.2s;
+}
+
+.history-date:hover {
+  background-color: rgba(0, 255, 51, 0.08);
+}
+
+.history-date span {
+  font-size: 11px;
+  color: var(--text-light);
+}
+
+.expand-icon {
+  color: var(--primary-green);
+  font-size: 10px;
+}
+
+.history-foods {
+  padding: 12px;
+  background-color: var(--dark-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.history-food-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background-color: rgba(0, 255, 51, 0.05);
+  border-radius: 4px;
+}
+
+.history-meal-type {
+  font-size: 10px;
+  color: var(--primary-green);
+  font-weight: 600;
+  min-width: 55px;
+}
+
+.history-food-name {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+.empty-message {
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 30px;
+  font-size: 12px;
+}
+

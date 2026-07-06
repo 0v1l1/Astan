@@ -29,9 +29,28 @@ function App() {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    WebApp.setHeaderColor(theme === 'dark' ? '#000000' : '#F2F2F7');
-    WebApp.setBackgroundColor(theme === 'dark' ? '#000000' : '#F2F2F7');
+    WebApp.setHeaderColor(theme === 'dark' ? '#08080A' : '#F2F2F7');
+    WebApp.setBackgroundColor(theme === 'dark' ? '#08080A' : '#F2F2F7');
   }, [theme]);
+
+  // Spotlight follow for liquid glass cards
+  useEffect(() => {
+    const addSpotlight = () => {
+      const cards = document.querySelectorAll(
+        '.glass-card, .grid-item, .card, .stat-card, .graph-card, .template-card, .water-card, .meal-section'
+      );
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+          card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+        });
+      });
+    };
+    addSpotlight();
+    const interval = setInterval(addSpotlight, 2000);
+    return () => clearInterval(interval);
+  }, [currentPage]);
 
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
@@ -52,9 +71,13 @@ function App() {
 
   return (
     <div className="app">
+      <div className="ambient"></div>
+      <div className="glow glow-1"></div>
+      <div className="glow glow-2"></div>
+      <div className="glow glow-3"></div>
       <div className="app-content">
         {user && (
-          <div style={{ fontSize: '12px', color: 'var(--text-secondary)', textAlign: 'right', marginBottom: '8px' }}>
+          <div style={{ fontSize: '12px', color: 'var(--text-faint)', textAlign: 'right', marginBottom: '8px' }}>
             {user.first_name} {user.last_name || ''}
           </div>
         )}

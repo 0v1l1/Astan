@@ -15,7 +15,8 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const tgTheme = WebApp.colorScheme || 'dark';
+    const savedTheme = localStorage.getItem('lifegoal_theme');
+const tgTheme = savedTheme || (WebApp.colorScheme === 'light' ? 'light' : 'dark');
     setTheme(tgTheme);
 
     if (WebApp.initDataUnsafe?.user) {

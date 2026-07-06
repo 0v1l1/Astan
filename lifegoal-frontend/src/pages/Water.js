@@ -33,7 +33,6 @@ function Water() {
 
   const addWater = async () => {
     if (!newAmount.trim()) return;
-
     try {
       const amount = parseFloat(newAmount);
       const res = await fetch('https://lftracker.onrender.com/api/water/', {
@@ -41,7 +40,6 @@ function Water() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount })
       });
-
       if (res.ok) {
         setNewAmount('');
         fetchWaterData();
@@ -56,6 +54,7 @@ function Water() {
     <div className="water">
       <div className="header">
         <div className="header-title"><span className="dot"></span> Вода</div>
+      </div>
 
       <div className="water-stats">
         <div className="water-card">
@@ -63,25 +62,10 @@ function Water() {
             <div className="water-circle">
               <div className="water-percentage">{Math.round(waterData.percentage)}%</div>
               <svg className="progress-ring" width="200" height="200">
-                <circle
-                  cx="100"
-                  cy="100"
-                  r="90"
-                  fill="none"
-                  stroke="rgba(0, 255, 65, 0.1)"
-                  strokeWidth="8"
-                />
-                <circle
-                  cx="100"
-                  cy="100"
-                  r="90"
-                  fill="none"
-                  stroke="var(--primary-green)"
-                  strokeWidth="8"
+                <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(52,199,89,0.15)" strokeWidth="8" />
+                <circle cx="100" cy="100" r="90" fill="none" stroke="var(--primary-green)" strokeWidth="8"
                   strokeDasharray={`${(Math.PI * 180 * waterData.percentage) / 100} ${Math.PI * 180}`}
-                  transform="rotate(-90 100 100)"
-                  style={{ transition: 'stroke-dasharray 0.5s ease' }}
-                />
+                  transform="rotate(-90 100 100)" style={{ transition: 'stroke-dasharray 0.5s ease' }} />
               </svg>
             </div>
             <div className="water-info">
@@ -93,29 +77,14 @@ function Water() {
       </div>
 
       <div className="add-water">
-        <input
-          type="number"
-          className="input-field"
-          placeholder="Литры"
-          value={newAmount}
-          onChange={(e) => setNewAmount(e.target.value)}
-          step="0.1"
-          min="0"
-        />
+        <input type="number" className="input-field" placeholder="Литры" value={newAmount}
+          onChange={(e) => setNewAmount(e.target.value)} step="0.1" min="0" />
         <button className="btn" onClick={addWater}>Добавить воду</button>
       </div>
 
       <div className="quick-buttons">
         {[0.25, 0.5, 1].map(amount => (
-          <button
-            key={amount}
-            className="quick-btn"
-            onClick={() => {
-              setNewAmount(amount.toString());
-            }}
-          >
-            +{amount}л
-          </button>
+          <button key={amount} className="quick-btn" onClick={() => setNewAmount(amount.toString())}>+{amount}л</button>
         ))}
       </div>
 
@@ -128,9 +97,7 @@ function Water() {
             {history.map(log => (
               <div key={log.id} className="history-item">
                 <span className="amount">{log.amount}л</span>
-                <span className="time">
-                  {new Date(log.date).toLocaleString('ru-RU')}
-                </span>
+                <span className="time">{new Date(log.date).toLocaleString('ru-RU')}</span>
               </div>
             ))}
           </div>

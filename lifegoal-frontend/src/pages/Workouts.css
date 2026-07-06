@@ -42,12 +42,14 @@
 }
 
 .template-card {
-  background-color: rgba(30, 30, 30, 0.7);
-  border: 1px solid var(--primary-green);
-  border-radius: 8px;
-  padding: 16px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  padding: 18px;
   margin-bottom: 12px;
-  backdrop-filter: blur(15px);
+  box-shadow: 0 4px 20px var(--glass-shadow), inset 0 1px 0 var(--glass-highlight);
 }
 
 .template-header {
@@ -69,8 +71,6 @@
   color: var(--text-secondary);
   font-size: 18px;
   cursor: pointer;
-  padding: 0;
-  transition: all 0.2s;
 }
 
 .delete-btn:hover {
@@ -88,34 +88,19 @@
   font-size: 12px;
   color: var(--text-secondary);
   padding: 6px 10px;
-  background-color: rgba(0, 255, 51, 0.05);
+  background: rgba(52, 199, 89, 0.05);
   border-left: 2px solid var(--primary-green);
-  border-radius: 3px;
+  border-radius: 6px;
 }
 
 .template-form {
-  background-color: rgba(30, 30, 30, 0.7);
-  border: 1px solid var(--primary-green);
-  border-radius: 8px;
-  padding: 16px;
-  backdrop-filter: blur(15px);
-}
-
-.exercises-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.exercise-form {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.exercise-form .input-field:first-child {
-  margin-bottom: 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 4px 20px var(--glass-shadow), inset 0 1px 0 var(--glass-highlight);
 }
 
 .exercise-inputs {
@@ -147,34 +132,28 @@
   font-weight: 600;
 }
 
-.input-small {
-  margin-bottom: 0 !important;
-}
-
 .form-buttons {
   display: flex;
   gap: 8px;
   justify-content: flex-end;
+  margin-top: 12px;
 }
 
 .btn-small {
   padding: 8px 14px;
   font-size: 11px;
-  border-radius: 6px;
-  min-width: auto;
-}
-
-.history-section {
-  margin-top: 30px;
+  border-radius: 10px;
 }
 
 .history-day {
-  background-color: rgba(30, 30, 30, 0.7);
-  border: 1px solid rgba(0, 255, 51, 0.2);
-  border-radius: 8px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
   margin-bottom: 8px;
   overflow: hidden;
-  backdrop-filter: blur(15px);
+  box-shadow: 0 2px 12px var(--glass-shadow);
 }
 
 .history-date {
@@ -183,13 +162,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(0, 255, 51, 0.05);
-  border-bottom: 1px solid rgba(0, 255, 51, 0.15);
-  transition: all 0.2s;
-}
-
-.history-date:hover {
-  background-color: rgba(0, 255, 51, 0.08);
 }
 
 .history-date span {
@@ -204,19 +176,14 @@
 
 .history-workouts {
   padding: 12px;
-  background-color: var(--dark-bg);
 }
 
 .workout-log-item {
   margin-bottom: 12px;
   padding: 10px;
-  background-color: rgba(0, 255, 51, 0.05);
+  background: rgba(52, 199, 89, 0.05);
   border-left: 2px solid var(--primary-green);
-  border-radius: 4px;
-}
-
-.workout-log-item:last-child {
-  margin-bottom: 0;
+  border-radius: 8px;
 }
 
 .log-time {
@@ -232,70 +199,23 @@
   padding: 4px 0;
 }
 
-.log-note {
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid rgba(0, 255, 51, 0.2);
-}
-
-.log-note strong {
-  color: var(--primary-green);
-  font-size: 11px;
-  display: block;
-  margin-bottom: 6px;
-}
-
-.note-view {
-  font-size: 12px;
-  color: var(--text-light);
-  line-height: 1.4;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.note-view p {
-  flex: 1;
-  margin: 0;
-}
-
-.note-actions {
-  display: flex;
-  gap: 4px;
-  flex-shrink: 0;
-}
-
-.note-edit {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
 .note-textarea {
-  background-color: rgba(0, 0, 0, 0.3);
+  background: var(--glass-bg);
   border: 1px solid var(--primary-green);
-  border-radius: 4px;
+  border-radius: 8px;
   color: var(--text-light);
-  padding: 6px;
+  padding: 8px;
   font-size: 12px;
   font-family: inherit;
   resize: none;
   min-height: 60px;
-}
-
-.note-textarea::placeholder {
-  color: var(--text-secondary);
-}
-
-.note-textarea:focus {
-  outline: none;
-  box-shadow: 0 0 8px rgba(0, 255, 51, 0.2);
+  width: 100%;
 }
 
 .note-buttons {
   display: flex;
   gap: 4px;
+  margin-top: 6px;
 }
 
 .note-btn {
@@ -304,17 +224,12 @@
   color: var(--primary-green);
   width: 28px;
   height: 28px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
-}
-
-.note-btn:hover {
-  background-color: rgba(0, 255, 51, 0.1);
 }
 
 .note-btn.delete {
@@ -322,26 +237,11 @@
   color: #FF6B6B;
 }
 
-.note-btn.delete:hover {
-  background-color: rgba(255, 107, 107, 0.1);
-}
-
 @media (max-width: 768px) {
   .workouts-header h1 {
     font-size: 24px;
   }
-
   .exercise-inputs {
     grid-template-columns: 1fr;
   }
-
-  .form-buttons {
-    flex-direction: column;
-  }
-
-  .btn-small {
-    width: 100%;
-  }
 }
-
-

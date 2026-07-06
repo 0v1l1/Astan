@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Todos.css';
 
+const API_URL = 'http://localhost:8000/api/todos';
+
 function Todos() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
@@ -12,6 +14,7 @@ function Todos() {
   const [expandedDate, setExpandedDate] = useState(null);
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState('');
+  const [error, setError] = useState(null);
 
   const daysOfWeek = [
     { id: 0, name: 'ПН' },
@@ -30,17 +33,20 @@ function Todos() {
 
   const fetchTodos = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/todos/');
+      const res = await fetch(`${API_URL}/`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       setTodos(data);
     } catch (error) {
       console.error('Error fetching todos:', error);
+      setError('Не удалось загрузить задачи');
     }
   };
 
   const fetchHistory = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/todos/history');
+      const res = await fetch(`${API_URL}/history`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       const grouped = {};
       data.forEach(todo => {
@@ -56,9 +62,10 @@ function Todos() {
 
   const addTodo = async () => {
     if (!newTodo.trim()) return;
+    setError(null);
 
     try {
-      const res = await fetch('http://localhost:8000/api/todos/', {
+      const res = await fetch(`${API_URL}/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -69,15 +76,22 @@ function Todos() {
         })
       });
 
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.detail || `HTTP ${res.status}`);
+      }
+
       const data = await res.json();
-      setTodos([data, ...todos]);
+      setTodos(prev => [data, ...prev]);
       setNewTodo('');
       setPriority('medium');
       setIsRecurring(false);
       setRecurringDays([]);
       setShowDaysDialog(false);
+      fetchHistory(); // Обновляем историю
     } catch (error) {
       console.error('Error adding todo:', error);
+      setError('Не удалось добавить задачу');
     }
   };
 
@@ -91,39 +105,59 @@ function Todos() {
 
   const toggleTodo = async (id, completed) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/todos/${id}`, {
+      const res = await fetch(`${API_URL}/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ completed: !completed })
       });
 
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
       const data = await res.json();
-      setTodos(todos.map(t => t.id === id ? data : t));
-      fetchHistory();
+      setTodos(prev => prev.map(t => t.id === id ? data : t));
+      fetchHistory(); // Обновляем историю после изменения статуса
     } catch (error) {
       console.error('Error updating todo:', error);
+      setError('Не удалось обновить задачу');
     }
   };
 
   const editTodo = async (id, newTitle) => {
+    if (!newTitle.trim()) return;
+    
     try {
-      const res = await fetch(`http://localhost:8000/api/todos/${id}`, {
+      const res = await fetch(`${API_URL}/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: newTitle })
       });
 
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
       const data = await res.json();
-      setTodos(todos.map(t => t.id === id ? data : t));
+      setTodos(prev => prev.map(t => t.id === id ? data : t));
       setEditingId(null);
       setEditingText('');
     } catch (error) {
       console.error('Error updating todo:', error);
+      setError('Не удалось отредактировать задачу');
     }
   };
 
   const deleteTodo = async (id) => {
-    setTodos(todos.filter(t => t.id !== id));
+    try {
+      const res = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      setTodos(prev => prev.filter(t => t.id !== id));
+      fetchHistory(); // Обновляем историю
+    } catch (error) {
+      console.error('Error deleting todo:', error);
+      setError('Не удалось удалить задачу');
+    }
   };
 
   const getPriorityColor = (priority) => {
@@ -140,6 +174,25 @@ function Todos() {
       <div className="header">
         <div className="header-title">Дела на день</div>
       </div>
+
+      {error && (
+        <div className="error-message" style={{
+          color: '#ff6b6b',
+          padding: '10px',
+          margin: '10px 0',
+          border: '1px solid #ff6b6b',
+          borderRadius: '6px',
+          textAlign: 'center'
+        }}>
+          {error}
+          <button 
+            onClick={() => setError(null)}
+            style={{ marginLeft: '10px', background: 'none', border: 'none', color: '#ff6b6b', cursor: 'pointer' }}
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
       <div className="add-todo">
         <input

@@ -2,13 +2,18 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from database import get_db
 from models import WaterLog
-from datetime import datetime, date
+from datetime import datetime, date, timezone, timedelta
 from pydantic import BaseModel
 
 router = APIRouter()
 
+LOCAL_TZ = timezone(timedelta(hours=3))
+
+def get_local_date():
+    return datetime.now(LOCAL_TZ).date()
+
 class WaterLogCreate(BaseModel):
-    amount: float  # in litres
+    amount: float
 
 @router.post("/")
 def log_water(water: WaterLogCreate, db: Session = Depends(get_db)):
@@ -20,15 +25,14 @@ def log_water(water: WaterLogCreate, db: Session = Depends(get_db)):
 
 @router.get("/today")
 def get_today_water(db: Session = Depends(get_db)):
-    today = datetime.utcnow().date()
+    today = get_local_date()
+    start_of_day = datetime.combine(today, datetime.min.time()).replace(tzinfo=LOCAL_TZ)
     logs = db.query(WaterLog).filter(
-        WaterLog.date >= datetime.combine(today, datetime.min.time())
+        WaterLog.date >= start_of_day
     ).all()
-
     total = sum(log.amount for log in logs)
     goal = 3.0
     percentage = min((total / goal) * 100, 100)
-
     return {"total": total, "goal": goal, "percentage": percentage}
 
 @router.get("/history")

@@ -2,11 +2,13 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from database import get_db
 from models import UserProfile
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from pydantic import BaseModel
 from typing import Optional
 
 router = APIRouter()
+
+LOCAL_TZ = timezone(timedelta(hours=3))
 
 class ProfileUpdate(BaseModel):
     height: Optional[float] = None
@@ -28,13 +30,11 @@ def update_profile(data: ProfileUpdate, db: Session = Depends(get_db)):
     if not profile:
         profile = UserProfile()
         db.add(profile)
-
     if data.height is not None:
         profile.height = data.height
     if data.weight is not None:
         profile.weight = data.weight
-
-    profile.updated_at = datetime.utcnow()
+    profile.updated_at = datetime.now(LOCAL_TZ)
     db.commit()
     db.refresh(profile)
     return profile

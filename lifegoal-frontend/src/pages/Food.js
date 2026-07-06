@@ -5,10 +5,12 @@ function Food() {
   const [foods, setFoods] = useState([]);
   const [foodHistory, setFoodHistory] = useState({});
   const [newFood, setNewFood] = useState('');
+  const [newGrams, setNewGrams] = useState('');
   const [mealType, setMealType] = useState('breakfast');
   const [expandedDate, setExpandedDate] = useState(null);
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState('');
+  const [editingGrams, setEditingGrams] = useState('');
 
   const mealTypes = {
     breakfast: { name: 'Завтрак', icon: '🌅' },
@@ -36,11 +38,14 @@ function Food() {
     try {
       const res = await fetch('http://localhost:8000/api/food/history');
       const data = await res.json();
+      
+      // Группируем по дате И типу приёма пищи
       const grouped = {};
       data.forEach(food => {
         const date = new Date(food.date).toLocaleDateString('ru-RU');
-        if (!grouped[date]) grouped[date] = [];
-        grouped[date].push(food);
+        if (!grouped[date]) grouped[date] = {};
+        if (!grouped[date][food.meal_type]) grouped[date][food.meal_type] = [];
+        grouped[date][food.meal_type].push(food);
       });
       setFoodHistory(grouped);
     } catch (error) {
@@ -57,27 +62,49 @@ function Food() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: newFood,
-          meal_type: mealType
+          meal_type: mealType,
+          grams: newGrams ? parseInt(newGrams) : 0
         })
       });
 
       const data = await res.json();
       setFoods([data, ...foods]);
       setNewFood('');
+      setNewGrams('');
       fetchHistory();
     } catch (error) {
       console.error('Error adding food:', error);
     }
   };
 
-  const deleteFood = (id) => {
-    setFoods(foods.filter(f => f.id !== id));
+  const deleteFood = async (id) => {
+    try {
+      await fetch(`http://localhost:8000/api/food/${id}`, { method: 'DELETE' });
+      setFoods(foods.filter(f => f.id !== id));
+      fetchHistory();
+    } catch (error) {
+      console.error('Error deleting food:', error);
+    }
   };
 
-  const editFood = (id, newName) => {
-    setFoods(foods.map(f => f.id === id ? { ...f, name: newName } : f));
-    setEditingId(null);
-    setEditingText('');
+  const editFood = async (id, newName, newGrams) => {
+    try {
+      await fetch(`http://localhost:8000/api/food/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          name: newName, 
+          grams: newGrams ? parseInt(newGrams) : 0 
+        })
+      });
+      setFoods(foods.map(f => f.id === id ? { ...f, name: newName, grams: parseInt(newGrams) || 0 } : f));
+      setEditingId(null);
+      setEditingText('');
+      setEditingGrams('');
+      fetchHistory();
+    } catch (error) {
+      console.error('Error editing food:', error);
+    }
   };
 
   const todayFoods = foods.filter(food => {
@@ -109,6 +136,16 @@ function Food() {
           onChange={(e) => setNewFood(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && addFood()}
         />
+        
+        <input
+          type="number"
+          className="input-field"
+          placeholder="Граммы"
+          value={newGrams}
+          onChange={(e) => setNewGrams(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && addFood()}
+          min="0"
+        />
 
         <div className="meal-type-select">
           <label>Приём пищи:</label>
@@ -127,7 +164,7 @@ function Food() {
       <div className="today-food">
         <h3>На сегодня:</h3>
         {Object.entries(mealTypes).map(([type, info]) => (
-          <div key={type} className="meal-section">
+          <div key={type} className="meal-section glass-card">
             <div className="meal-header">
               <span className="meal-icon">{info.icon}</span>
               <span className="meal-name">{info.name}</span>
@@ -144,20 +181,32 @@ function Food() {
                           className="food-edit-input"
                           value={editingText}
                           onChange={(e) => setEditingText(e.target.value)}
-                          onBlur={() => editFood(food.id, editingText)}
-                          onKeyPress={(e) => e.key === 'Enter' && editFood(food.id, editingText)}
-                          autoFocus
+                          placeholder="Название"
                         />
+                        <input
+                          type="number"
+                          className="food-edit-input"
+                          value={editingGrams}
+                          onChange={(e) => setEditingGrams(e.target.value)}
+                          placeholder="Граммы"
+                          min="0"
+                        />
+                        <button className="food-btn save" onClick={() => editFood(food.id, editingText, editingGrams)}>✓</button>
+                        <button className="food-btn cancel" onClick={() => setEditingId(null)}>✕</button>
                       </div>
                     ) : (
                       <>
-                        <span className="food-name">{food.name}</span>
+                        <span className="food-name">
+                          {food.name}
+                          {food.grams > 0 && <span className="food-grams"> ({food.grams}г)</span>}
+                        </span>
                         <div className="food-actions">
                           <button
                             className="food-btn edit"
                             onClick={() => {
                               setEditingId(food.id);
                               setEditingText(food.name);
+                              setEditingGrams(food.grams?.toString() || '');
                             }}
                           >
                             ✎
@@ -186,8 +235,8 @@ function Food() {
         {Object.entries(foodHistory).length === 0 ? (
           <p className="empty-message">История пуста</p>
         ) : (
-          Object.entries(foodHistory).map(([date, dayFoods]) => (
-            <div key={date} className="history-day">
+          Object.entries(foodHistory).map(([date, mealsByType]) => (
+            <div key={date} className="history-day glass-card">
               <div
                 className="history-date"
                 onClick={() => setExpandedDate(expandedDate === date ? null : date)}
@@ -197,14 +246,21 @@ function Food() {
               </div>
               {expandedDate === date && (
                 <div className="history-foods">
-                  {dayFoods.map(food => (
-                    <div key={food.id} className="history-food-item">
-                      <span className="history-meal-type">
-                        {mealTypes[food.meal_type]?.icon} {mealTypes[food.meal_type]?.name}
-                      </span>
-                      <span className="history-food-name">{food.name}</span>
-                    </div>
-                  ))}
+                  {Object.entries(mealsByType).map(([type, foods]) => {
+                    // Объединяем блюда одного типа в строку
+                    const foodString = foods.map(f => 
+                      f.grams > 0 ? `${f.name} (${f.grams}г)` : f.name
+                    ).join(', ');
+                    
+                    return (
+                      <div key={type} className="history-meal-group">
+                        <span className="history-meal-type">
+                          {mealTypes[type]?.icon} {mealTypes[type]?.name}:
+                        </span>
+                        <span className="history-food-names">{foodString}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>

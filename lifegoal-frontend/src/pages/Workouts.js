@@ -18,7 +18,7 @@ function Workouts() {
 
   const fetchTemplates = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/workouts/templates');
+      const res = await fetch('https://lftracker.onrender.com/api/workouts/templates');
       const data = await res.json();
       setTemplates(data);
     } catch (error) {
@@ -28,7 +28,7 @@ function Workouts() {
 
   const fetchLogs = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/workouts/logs');
+      const res = await fetch('https://lftracker.onrender.com/api/workouts/logs');
       const data = await res.json();
       const grouped = {};
       data.forEach(log => {
@@ -47,7 +47,7 @@ function Workouts() {
     if (!newTemplate.name.trim()) return;
 
     try {
-      const res = await fetch('http://localhost:8000/api/workouts/templates', {
+      const res = await fetch('https://lftracker.onrender.com/api/workouts/templates', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newTemplate)
@@ -63,7 +63,7 @@ function Workouts() {
 
   const logWorkout = async (templateId, exercises) => {
     try {
-      const res = await fetch('http://localhost:8000/api/workouts/log', {
+      const res = await fetch('https://lftracker.onrender.com/api/workouts/log', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

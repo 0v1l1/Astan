@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Todos.css';
 
-const API_URL = 'http://localhost:8000/api/todos';
+const API_URL = 'https://lftracker.onrender.com/api/todos';
 
 function Todos() {
   const [todos, setTodos] = useState([]);

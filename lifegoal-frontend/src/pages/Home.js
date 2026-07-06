@@ -34,9 +34,9 @@ function Home() {
   const fetchStats = async () => {
     try {
       const [todosRes, waterRes, workoutsRes] = await Promise.all([
-        fetch('http://localhost:8000/api/todos/completed-percentage'),
-        fetch('http://localhost:8000/api/water/today'),
-        fetch('http://localhost:8000/api/workouts/logs/today')
+        fetch('https://lftracker.onrender.com/api/todos/completed-percentage'),
+        fetch('https://lftracker.onrender.com/api/water/today'),
+        fetch('https://lftracker.onrender.com/api/workouts/logs/today')
       ]);
 
       const todosData = await todosRes.json();
@@ -56,7 +56,7 @@ function Home() {
 
   const fetchNotes = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/notes/');
+      const res = await fetch('https://lftracker.onrender.com/api/notes/');
       const data = await res.json();
       setNotes(data);
     } catch (error) {
@@ -67,7 +67,7 @@ function Home() {
   const addNote = async () => {
     if (!newNote.trim()) return;
     try {
-      const res = await fetch('http://localhost:8000/api/notes/', {
+      const res = await fetch('https://lftracker.onrender.com/api/notes/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ content: newNote })
@@ -82,7 +82,7 @@ function Home() {
 
   const deleteNote = async (id) => {
     try {
-      await fetch(`http://localhost:8000/api/notes/${id}`, { method: 'DELETE' });
+      await fetch(`https://lftracker.onrender.com/api/notes/${id}`, { method: 'DELETE' });
       setNotes(notes.filter(n => n.id !== id));
     } catch (error) {
       console.error('Error deleting note:', error);
@@ -91,7 +91,7 @@ function Home() {
 
   const editNote = async (id, newText) => {
     try {
-      await fetch(`http://localhost:8000/api/notes/${id}`, {
+      await fetch(`https://lftracker.onrender.com/api/notes/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ content: newText })

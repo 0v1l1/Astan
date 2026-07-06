@@ -12,7 +12,7 @@ function Profile({ theme, toggleTheme, user }) {
 
   const fetchProfile = useCallback(async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/profile/');
+      const res = await fetch('https://lftracker.onrender.com/api/profile/');
       const data = await res.json();
       setProfile(data);
       if (data.height) setHeight(data.height.toString());
@@ -25,9 +25,9 @@ function Profile({ theme, toggleTheme, user }) {
   const fetchStats = useCallback(async () => {
     try {
       const [workoutsRes, todosRes, waterRes] = await Promise.all([
-        fetch('http://localhost:8000/api/workouts/logs'),
-        fetch('http://localhost:8000/api/todos/history'),
-        fetch('http://localhost:8000/api/water/history')
+        fetch('https://lftracker.onrender.com/api/workouts/logs'),
+        fetch('https://lftracker.onrender.com/api/todos/history'),
+        fetch('https://lftracker.onrender.com/api/water/history')
       ]);
       const workouts = await workoutsRes.json();
       const todos = await todosRes.json();
@@ -95,7 +95,7 @@ function Profile({ theme, toggleTheme, user }) {
     await cloudSetItem('lifegoal_profile', newProfile);
 
     try {
-      const res = await fetch('http://localhost:8000/api/profile/', {
+      const res = await fetch('https://lftracker.onrender.com/api/profile/', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

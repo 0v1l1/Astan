@@ -13,7 +13,7 @@ function Water() {
 
   const fetchWaterData = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/water/today');
+      const res = await fetch('https://lftracker.onrender.com/api/water/today');
       const data = await res.json();
       setWaterData(data);
     } catch (error) {
@@ -23,7 +23,7 @@ function Water() {
 
   const fetchHistory = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/water/history');
+      const res = await fetch('https://lftracker.onrender.com/api/water/history');
       const data = await res.json();
       setHistory(data);
     } catch (error) {
@@ -36,7 +36,7 @@ function Water() {
 
     try {
       const amount = parseFloat(newAmount);
-      const res = await fetch('http://localhost:8000/api/water/', {
+      const res = await fetch('https://lftracker.onrender.com/api/water/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount })

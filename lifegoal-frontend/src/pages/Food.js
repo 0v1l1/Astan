@@ -26,7 +26,7 @@ function Food() {
 
   const fetchFoods = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/food/');
+      const res = await fetch('https://lftracker.onrender.com/api/food/');
       const data = await res.json();
       setFoods(data);
     } catch (error) {
@@ -36,7 +36,7 @@ function Food() {
 
   const fetchHistory = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/food/history');
+      const res = await fetch('https://lftracker.onrender.com/api/food/history');
       const data = await res.json();
       
       // Группируем по дате И типу приёма пищи
@@ -57,7 +57,7 @@ function Food() {
     if (!newFood.trim()) return;
 
     try {
-      const res = await fetch('http://localhost:8000/api/food/', {
+      const res = await fetch('https://lftracker.onrender.com/api/food/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -79,7 +79,7 @@ function Food() {
 
   const deleteFood = async (id) => {
     try {
-      await fetch(`http://localhost:8000/api/food/${id}`, { method: 'DELETE' });
+      await fetch(`https://lftracker.onrender.com/api/food/${id}`, { method: 'DELETE' });
       setFoods(foods.filter(f => f.id !== id));
       fetchHistory();
     } catch (error) {
@@ -89,7 +89,7 @@ function Food() {
 
   const editFood = async (id, newName, newGrams) => {
     try {
-      await fetch(`http://localhost:8000/api/food/${id}`, {
+      await fetch(`https://lftracker.onrender.com/api/food/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

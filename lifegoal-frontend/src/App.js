@@ -15,17 +15,10 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('lifegoal_theme');
-const tgTheme = savedTheme || (WebApp.colorScheme === 'light' ? 'light' : 'dark');
+    const tgTheme = WebApp.colorScheme === 'light' ? 'light' : 'dark';
     setTheme(tgTheme);
-
-    if (WebApp.initDataUnsafe?.user) {
-      setUser(WebApp.initDataUnsafe.user);
-    }
-
-    WebApp.onEvent('themeChanged', () => {
-      setTheme(WebApp.colorScheme);
-    });
+    if (WebApp.initDataUnsafe?.user) setUser(WebApp.initDataUnsafe.user);
+    WebApp.onEvent('themeChanged', () => setTheme(WebApp.colorScheme === 'light' ? 'light' : 'dark'));
   }, []);
 
   useEffect(() => {
@@ -34,27 +27,7 @@ const tgTheme = savedTheme || (WebApp.colorScheme === 'light' ? 'light' : 'dark'
     WebApp.setBackgroundColor(theme === 'dark' ? '#08080A' : '#F2F2F7');
   }, [theme]);
 
-  useEffect(() => {
-    const addSpotlight = () => {
-      document.querySelectorAll(
-        '.glass-card, .grid-item, .card, .stat-card, .graph-card, .template-card, .water-card, .meal-section, .todo-item, .history-day, .info-card, .settings-card'
-      ).forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-          const r = card.getBoundingClientRect();
-          card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-          card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
-        });
-      });
-    };
-    addSpotlight();
-    const interval = setInterval(addSpotlight, 2000);
-    return () => clearInterval(interval);
-  }, [currentPage]);
-
-  const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-  };
+  const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
 
   const renderPage = () => {
     switch (currentPage) {
@@ -75,23 +48,20 @@ const tgTheme = savedTheme || (WebApp.colorScheme === 'light' ? 'light' : 'dark'
       <div className="glow glow-2"></div>
       <div className="glow glow-3"></div>
       <div className="app-content">
-        {/* Аватар из Telegram в правом верхнем углу */}
         {user && (
-          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
             <span style={{ fontSize: '13px', color: 'var(--text-soft)', fontWeight: 500 }}>{user.first_name}</span>
             <div style={{
               width: '38px', height: '38px', borderRadius: '50%',
               background: 'linear-gradient(145deg, var(--primary-green), #1a5c1a)',
-              boxShadow: '0 0 16px rgba(52, 199, 89, 0.4)',
+              boxShadow: '0 0 16px rgba(52, 199, 89, 0.5)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              overflow: 'hidden', border: '1px solid var(--border-hi)', flexShrink: 0
+              overflow: 'hidden', border: '2px solid var(--border-hi)', flexShrink: 0
             }}>
               {user.photo_url ? (
                 <img src={user.photo_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
-                <span style={{ color: '#fff', fontWeight: 800, fontSize: '16px' }}>
-                  {user.first_name?.charAt(0) || '?'}
-                </span>
+                <span style={{ color: '#fff', fontWeight: 800, fontSize: '16px' }}>{user.first_name?.charAt(0) || '?'}</span>
               )}
             </div>
           </div>

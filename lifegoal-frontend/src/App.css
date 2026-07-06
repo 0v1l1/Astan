@@ -510,3 +510,13 @@ body {
     transition-duration: 0.001ms !important;
   }
 }
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary-green);
+  box-shadow: 0 0 8px var(--primary-green);
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: middle;
+}

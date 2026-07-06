@@ -36,10 +36,9 @@ function App() {
   // Spotlight follow for liquid glass cards
   useEffect(() => {
     const addSpotlight = () => {
-      const cards = document.querySelectorAll(
-        '.glass-card, .grid-item, .card, .stat-card, .graph-card, .template-card, .water-card, .meal-section'
-      );
-      cards.forEach(card => {
+      document.querySelectorAll(
+        '.glass-card, .grid-item, .card, .stat-card, .graph-card, .template-card, .water-card, .meal-section, .todo-item, .food-item, .history-day, .info-card, .settings-card'
+      ).forEach(card => {
         card.addEventListener('mousemove', (e) => {
           const r = card.getBoundingClientRect();
           card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
@@ -77,8 +76,15 @@ function App() {
       <div className="glow glow-3"></div>
       <div className="app-content">
         {user && (
-          <div style={{ fontSize: '12px', color: 'var(--text-faint)', textAlign: 'right', marginBottom: '8px' }}>
-            {user.first_name} {user.last_name || ''}
+          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <span style={{ fontSize: '12px', color: 'var(--text-faint)' }}>{user.first_name}</span>
+            {user.photo_url ? (
+              <img src={user.photo_url} alt="" style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid var(--border)' }} />
+            ) : (
+              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--glass-strong)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-faint)', fontSize: '14px', fontWeight: 700 }}>
+                {user.first_name?.charAt(0) || '?'}
+              </div>
+            )}
           </div>
         )}
         {renderPage()}

@@ -55,8 +55,7 @@ function Water() {
   return (
     <div className="water">
       <div className="header">
-        <div className="header-title">Вода</div>
-      </div>
+        <div className="header-title"><span className="dot"></span> Вода</div>
 
       <div className="water-stats">
         <div className="water-card">

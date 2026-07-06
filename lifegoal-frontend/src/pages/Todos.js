@@ -65,7 +65,9 @@ function Todos() {
   return (
     <div className="todos">
       <div className="header">
-        <div className="header-title">Дела на день</div>
+        <div className="header-title">
+  <span className="dot"></span> Дела на день
+</div>
       </div>
 
       <div className="add-todo">

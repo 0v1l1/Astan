@@ -124,7 +124,7 @@ function Food() {
   return (
     <div className="food">
       <div className="header">
-        <div className="header-title">Еда</div>
+        <div className="header-title"><span className="dot"></span> Еда</div>
       </div>
 
       <div className="add-food">

@@ -116,7 +116,7 @@ function Profile({ theme, toggleTheme, user }) {
   return (
     <div className="profile">
       <div className="header">
-        <div className="header-title">Профиль</div>
+        <div className="header-title"><span className="dot"></span> Профиль</div>
       </div>
 
       {user && (

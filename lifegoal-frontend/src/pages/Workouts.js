@@ -105,9 +105,9 @@ function Workouts() {
 
   return (
     <div className="workouts">
-      <div className="workouts-header">
-        <h1>ТРЕНИРОВКИ</h1>
-      </div>
+     <div className="header">
+  <div className="header-title"><span className="dot"></span> ТРЕНИРОВКИ</div>
+</div>
 
       <div className="templates-section">
         <h3>Сохранённые программы</h3>

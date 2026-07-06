@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './Profile.css';
 import { cloudGetItem, cloudSetItem } from '../utils/cloudStorage';
 
@@ -10,33 +10,7 @@ function Profile({ theme, toggleTheme, user }) {
   const [weekData, setWeekData] = useState([]);
   const [monthData, setMonthData] = useState([]);
 
- useEffect(() => {
-  const init = async () => {
-    const saved = await cloudGetItem('lifegoal_profile');
-    if (saved) {
-      setProfile(saved);
-      if (saved.height) setHeight(saved.height.toString());
-      if (saved.weight) setWeight(saved.weight.toString());
-    } else {
-      fetchProfile();
-    }
-  };
-  init();
-  fetchStats();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
-  const loadProfile = async () => {
-    const saved = await cloudGetItem('lifegoal_profile');
-    if (saved) {
-      setProfile(saved);
-      if (saved.height) setHeight(saved.height.toString());
-      if (saved.weight) setWeight(saved.weight.toString());
-    } else {
-      fetchProfile();
-    }
-  };
-
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     try {
       const res = await fetch('http://localhost:8000/api/profile/');
       const data = await res.json();
@@ -46,9 +20,9 @@ function Profile({ theme, toggleTheme, user }) {
     } catch (error) {
       console.error('Error fetching profile:', error);
     }
-  };
+  }, []);
 
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     try {
       const [workoutsRes, todosRes, waterRes] = await Promise.all([
         fetch('http://localhost:8000/api/workouts/logs'),
@@ -94,7 +68,22 @@ function Profile({ theme, toggleTheme, user }) {
     } catch (error) {
       console.error('Error fetching stats:', error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    const init = async () => {
+      const saved = await cloudGetItem('lifegoal_profile');
+      if (saved) {
+        setProfile(saved);
+        if (saved.height) setHeight(saved.height.toString());
+        if (saved.weight) setWeight(saved.weight.toString());
+      } else {
+        fetchProfile();
+      }
+    };
+    init();
+    fetchStats();
+  }, [fetchProfile, fetchStats]);
 
   const updateProfile = async () => {
     const newProfile = {

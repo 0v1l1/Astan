@@ -10,11 +10,21 @@ function Profile({ theme, toggleTheme, user }) {
   const [weekData, setWeekData] = useState([]);
   const [monthData, setMonthData] = useState([]);
 
-  useEffect(() => {
-    loadProfile();
-    fetchStats();
-  }, []);
-
+ useEffect(() => {
+  const init = async () => {
+    const saved = await cloudGetItem('lifegoal_profile');
+    if (saved) {
+      setProfile(saved);
+      if (saved.height) setHeight(saved.height.toString());
+      if (saved.weight) setWeight(saved.weight.toString());
+    } else {
+      fetchProfile();
+    }
+  };
+  init();
+  fetchStats();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
   const loadProfile = async () => {
     const saved = await cloudGetItem('lifegoal_profile');
     if (saved) {

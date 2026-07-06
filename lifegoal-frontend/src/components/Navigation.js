@@ -3,60 +3,54 @@ import './Navigation.css';
 
 function Navigation({ currentPage, setCurrentPage }) {
   const navItems = [
-    { id: 'home', icon: 'home' },
-    { id: 'todos', icon: 'checkmark' },
-    { id: 'workouts', icon: 'dumbbell' },
-    { id: 'water', icon: 'droplet' },
-    { id: 'food', icon: 'fork' },
-    { id: 'profile', icon: 'person' },
+    { id: 'home', icon: 'home', label: 'Главная' },
+    { id: 'todos', icon: 'checkmark', label: 'Дела' },
+    { id: 'workouts', icon: 'dumbbell', label: 'Спорт' },
+    { id: 'water', icon: 'droplet', label: 'Вода' },
+    { id: 'food', icon: 'fork', label: 'Еда' },
+    { id: 'profile', icon: 'person', label: 'Профиль' },
   ];
 
   const renderIcon = (icon) => {
     const iconMap = {
       home: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-          <polyline points="9 22 9 12 15 12 15 22"/>
+          <path d="M3 11.5 12 4l9 7.5"/>
+          <path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/>
         </svg>
       ),
       checkmark: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="20 6 9 17 4 12"/>
+          <path d="M9 6h11"/>
+          <path d="M9 12h11"/>
+          <path d="M9 18h11"/>
+          <path d="m3 6 1.2 1.2L6.5 5"/>
+          <path d="m3 12 1.2 1.2 2.3-2.2"/>
+          <path d="m3 18 1.2 1.2 2.3-2.2"/>
         </svg>
       ),
       dumbbell: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-          {/* Гриф */}
           <line x1="7" y1="12" x2="17" y2="12" strokeWidth="2.5" />
-          {/* Левый блин */}
           <rect x="3" y="8" width="3" height="8" rx="1" />
-          {/* Правый блин */}
           <rect x="18" y="8" width="3" height="8" rx="1" />
-          {/* Левый держатель */}
-          <line x1="6" y1="10.5" x2="7" y2="10.5" strokeWidth="2" />
-          <line x1="6" y1="13.5" x2="7" y2="13.5" strokeWidth="2" />
-          {/* Правый держатель */}
-          <line x1="17" y1="10.5" x2="18" y2="10.5" strokeWidth="2" />
-          <line x1="17" y1="13.5" x2="18" y2="13.5" strokeWidth="2" />
         </svg>
       ),
       droplet: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+          <path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/>
         </svg>
       ),
-    fork: (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    {/* Овальная чаша ложки */}
-    <ellipse cx="12" cy="6" rx="5" ry="6" />
-    {/* Ручка */}
-    <line x1="12" y1="12" x2="12" y2="21" strokeWidth="3.1" />
-  </svg>
-),
+      fork: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <ellipse cx="12" cy="6" rx="5" ry="6" />
+          <line x1="12" y1="12" x2="12" y2="21" strokeWidth="2.5" />
+        </svg>
+      ),
       person: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="12" cy="8" r="4"/>
-          <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+          <path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>
         </svg>
       ),
     };
@@ -64,17 +58,18 @@ function Navigation({ currentPage, setCurrentPage }) {
   };
 
   return (
-    <div className="navigation">
+    <div className="nav">
       {navItems.map(item => (
         <button
           key={item.id}
           className={`nav-item ${currentPage === item.id ? 'active' : ''}`}
           onClick={() => setCurrentPage(item.id)}
-          title={item.id}
         >
+          <span className="nav-dot"></span>
           <div className="nav-icon-wrapper">
             {renderIcon(item.icon)}
           </div>
+          <span>{item.label}</span>
         </button>
       ))}
     </div>

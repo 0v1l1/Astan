@@ -33,11 +33,10 @@ function App() {
     WebApp.setBackgroundColor(theme === 'dark' ? '#08080A' : '#F2F2F7');
   }, [theme]);
 
-  // Spotlight follow for liquid glass cards
   useEffect(() => {
     const addSpotlight = () => {
       document.querySelectorAll(
-        '.glass-card, .grid-item, .card, .stat-card, .graph-card, .template-card, .water-card, .meal-section, .todo-item, .food-item, .history-day, .info-card, .settings-card'
+        '.glass-card, .grid-item, .card, .stat-card, .graph-card, .template-card, .water-card, .meal-section, .todo-item, .history-day, .info-card, .settings-card'
       ).forEach(card => {
         card.addEventListener('mousemove', (e) => {
           const r = card.getBoundingClientRect();
@@ -75,16 +74,25 @@ function App() {
       <div className="glow glow-2"></div>
       <div className="glow glow-3"></div>
       <div className="app-content">
+        {/* Аватар из Telegram в правом верхнем углу */}
         {user && (
-          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-            <span style={{ fontSize: '12px', color: 'var(--text-faint)' }}>{user.first_name}</span>
-            {user.photo_url ? (
-              <img src={user.photo_url} alt="" style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid var(--border)' }} />
-            ) : (
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--glass-strong)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-faint)', fontSize: '14px', fontWeight: 700 }}>
-                {user.first_name?.charAt(0) || '?'}
-              </div>
-            )}
+          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+            <span style={{ fontSize: '13px', color: 'var(--text-soft)', fontWeight: 500 }}>{user.first_name}</span>
+            <div style={{
+              width: '38px', height: '38px', borderRadius: '50%',
+              background: 'linear-gradient(145deg, var(--primary-green), #1a5c1a)',
+              boxShadow: '0 0 16px rgba(52, 199, 89, 0.4)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              overflow: 'hidden', border: '1px solid var(--border-hi)', flexShrink: 0
+            }}>
+              {user.photo_url ? (
+                <img src={user.photo_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                <span style={{ color: '#fff', fontWeight: 800, fontSize: '16px' }}>
+                  {user.first_name?.charAt(0) || '?'}
+                </span>
+              )}
+            </div>
           </div>
         )}
         {renderPage()}

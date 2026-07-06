@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './Profile.css';
-import { cloudGetItem, cloudSetItem } from '../utils/cloudStorage';
+const cloudGetItem = (key) => JSON.parse(localStorage.getItem(key) || 'null');
+const cloudSetItem = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
 function Profile({ theme, toggleTheme, user }) {
   const [profile, setProfile] = useState({ height: null, weight: null, updated_at: null });

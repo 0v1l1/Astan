@@ -2,30 +2,23 @@ import React, { useState, useEffect } from 'react';
 import './Home.css';
 
 function Home() {
-  const [stats, setStats] = useState({ todos: 0, water: 0 });
+  const [stats, setStats] = useState({ todos: 0, food: 0, workouts: false, water: { percentage: 0, total: 0 } });
   const [notes, setNotes] = useState([]);
-  const [newNote, setNewNote] = useState('');
   const [showNotesModal, setShowNotesModal] = useState(false);
-  const [showInfoModal, setShowInfoModal] = useState(false);
-  const [showReminderModal, setShowReminderModal] = useState(false);
-  const [showCalendarModal, setShowCalendarModal] = useState(false);
-  const [reminders] = useState(['Выпить стакан воды', 'Сделать разминку', 'Проверить список дел', 'Записать мысли в заметки']);
+  const [newNote, setNewNote] = useState('');
 
   const today = new Date();
   const dateStr = today.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric', month: 'long' });
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  useEffect(() => { loadData(); }, []);
 
   const loadData = () => {
-    const todoKey = 'todos_' + today.toLocaleDateString('ru-RU');
-    const todos = JSON.parse(localStorage.getItem(todoKey) || '[]');
-    const done = todos.filter(t => t.completed).length;
-    setStats({ todos: todos.length ? Math.round((done / todos.length) * 100) : 0, water: 0 });
-
     const savedNotes = JSON.parse(localStorage.getItem('notes_all') || '[]');
     setNotes(savedNotes);
+    try {
+      fetch('https://lftracker.onrender.com/api/todos/completed-percentage').then(r => r.json()).then(d => setStats(s => ({ ...s, todos: d.percentage || 0 }))).catch(() => {});
+      fetch('https://lftracker.onrender.com/api/water/today').then(r => r.json()).then(d => setStats(s => ({ ...s, water: d }))).catch(() => {});
+    } catch(e) {}
   };
 
   const addNote = () => {
@@ -47,55 +40,39 @@ function Home() {
     <div className="home">
       <div className="header">
         <div><div className="header-title">● LIFEGOAL</div><div className="header-subtitle">{dateStr}</div></div>
-        <div className="icon-group">
-          <button className="icon-btn" onClick={() => setShowCalendarModal(true)}>📅</button>
-          <button className="icon-btn" onClick={() => setShowReminderModal(true)}>💡</button>
-          <button className="icon-btn" onClick={() => setShowInfoModal(true)}>⚙️</button>
-        </div>
       </div>
 
-      <div className="summary-title">ГЛАВНАЯ СВОДКА</div>
       <div className="grid">
-        <div className="grid-item"><div className="grid-item-label">ДЕЛА</div><div className="grid-item-value">{stats.todos}%</div><div className="grid-item-progress"><div className="progress-fill" style={{ width: `${stats.todos}%` }}></div></div></div>
+        <div className="grid-item"><div className="grid-item-label">ДЕЛА</div><div className="grid-item-value">{Math.round(stats.todos)}%</div><div className="grid-item-progress"><div className="progress-fill" style={{ width: `${stats.todos}%` }}></div></div></div>
         <div className="grid-item"><div className="grid-item-label">ЕДА</div><div className="grid-item-value">0%</div></div>
-        <div className="grid-item"><div className="grid-item-label">ТРЕНИРОВКА</div><div className="grid-item-value">0%</div></div>
-        <div className="grid-item"><div className="grid-item-label">ВОДА</div><div className="grid-item-value">0%</div></div>
+        <div className="grid-item"><div className="grid-item-label">ТРЕНИРОВКА</div><div className="grid-item-value">{stats.workouts ? '✓' : '0%'}</div></div>
+        <div className="grid-item"><div className="grid-item-label">ВОДА</div><div className="grid-item-value">{Math.round(stats.water.percentage || 0)}%</div></div>
       </div>
 
-      <div className="notes-section">
-        <div className="notes-header glass-card" onClick={() => setShowNotesModal(true)}>
-          <span>📝</span><div><div className="notes-title">ЗАМЕТКИ</div><div>{notes.length}</div></div><span>→</span>
+      <div className="notes-header glass-card" onClick={() => setShowNotesModal(true)} style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '16px', cursor: 'pointer' }}>
+        <div className="notes-icon-wrapper">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
         </div>
+        <div style={{ flex: 1 }}><div style={{ fontSize: '12px', color: 'var(--primary-green)', textTransform: 'uppercase', fontWeight: 700 }}>ЗАМЕТКИ</div><div style={{ fontSize: '24px', fontWeight: 700 }}>{notes.length}</div></div>
+        <span style={{ fontSize: '18px', color: 'var(--text-faint)' }}>→</span>
       </div>
 
       {showNotesModal && (
         <div className="modal-overlay" onClick={() => setShowNotesModal(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h2>Заметки</h2>
-            <textarea className="note-textarea" placeholder="Напишите заметку..." value={newNote} onChange={e => setNewNote(e.target.value)} />
-            <button className="btn" onClick={addNote}>Сохранить</button>
-            <div style={{ marginTop: '16px' }}>
+            <h2 style={{ marginBottom: '16px' }}>Заметки</h2>
+            <textarea className="input-field" placeholder="Напишите заметку..." value={newNote} onChange={e => setNewNote(e.target.value)} style={{ minHeight: '100px' }} />
+            <button className="btn" onClick={addNote} style={{ width: '100%', marginTop: '8px' }}>Сохранить</button>
+            <div style={{ marginTop: '20px' }}>
               {notes.map(n => (
-                <div key={n.id} className="glass-card" style={{ padding: '10px', margin: '6px 0', display: 'flex', justifyContent: 'space-between' }}>
-                  <span>{n.content}</span>
-                  <button onClick={() => deleteNote(n.id)} style={{ background: 'none', border: 'none', color: 'var(--text-faint)', cursor: 'pointer' }}>✕</button>
+                <div key={n.id} className="glass-card" style={{ padding: '12px', margin: '8px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <div style={{ fontSize: '14px' }}>{n.content}</div>
+                    <div style={{ fontSize: '11px', color: 'var(--text-faint)', marginTop: '4px' }}>{new Date(n.date).toLocaleString('ru-RU')}</div>
+                  </div>
+                  <button onClick={() => deleteNote(n.id)} style={{ background: 'none', border: 'none', color: 'var(--text-faint)', cursor: 'pointer', fontSize: '16px' }}>✕</button>
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showInfoModal && (
-        <div className="modal-overlay" onClick={() => setShowInfoModal(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h2>О приложении</h2>
-            <div style={{ textAlign: 'center', padding: '20px' }}>
-              <div style={{ fontSize: '40px' }}>●</div>
-              <h3>LifeGoal</h3>
-              <p>Трекер дня и привычек</p>
-              <p style={{ color: 'var(--primary-green)' }}>Версия 1.0.0</p>
-              <p>© {new Date().getFullYear()} LifeGoal</p>
             </div>
           </div>
         </div>

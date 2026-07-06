@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 import os
 from dotenv import load_dotenv
 
@@ -12,6 +11,7 @@ app = FastAPI(title="LifeGoal API")
 origins = [
     "http://localhost:3000",
     "http://localhost:8000",
+    "https://lifegoal-seven.vercel.app",
 ]
 
 app.add_middleware(

@@ -3,15 +3,15 @@
 :root {
   --primary-green: #34C759;
   --dark-bg: #08080A;
-  --glass: rgba(255, 255, 255, 0.05);
-  --glass-strong: rgba(255, 255, 255, 0.09);
-  --border: rgba(255, 255, 255, 0.08);
-  --border-hi: rgba(255, 255, 255, 0.15);
+  --glass: rgba(255, 255, 255, 0.07);
+  --glass-strong: rgba(255, 255, 255, 0.12);
+  --border: rgba(255, 255, 255, 0.1);
+  --border-hi: rgba(255, 255, 255, 0.2);
   --text: #F5F5F7;
   --text-soft: #9A9AA2;
   --text-faint: #67676E;
   --blur-amount: 30px;
-  --saturation: 160%;
+  --saturation: 180%;
 }
 
 [data-theme="light"] {
@@ -55,18 +55,23 @@ body {
   border-radius: 20px;
   backdrop-filter: blur(var(--blur-amount)) saturate(var(--saturation));
   -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(var(--saturation));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 8px 32px rgba(0,0,0,0.35);
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    inset 0 0 0 1px rgba(255,255,255,0.03),
+    0 8px 32px rgba(0,0,0,0.5);
   overflow: hidden;
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Spotlight on hover */
 .glass-card:hover, .grid-item:hover, .notes-header:hover, .history-day:hover,
 .meal-section:hover, .info-card:hover, .stat-card:hover, .graph-card:hover,
 .settings-card:hover, .template-card:hover, .water-card:hover, .todo-item:hover {
+  background: linear-gradient(155deg, rgba(255,255,255,0.16), rgba(255,255,255,0.1));
   border-color: var(--border-hi);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 12px 40px rgba(0,0,0,0.5),
-              inset 0 0 80px rgba(52,199,89,0.05);
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.2),
+    inset 0 0 80px rgba(52,199,89,0.06),
+    0 12px 48px rgba(0,0,0,0.6);
   transform: translateY(-2px);
 }
 
@@ -97,7 +102,7 @@ body {
 }
 .icon-btn:hover { background: var(--glass-strong); color: var(--text); border-color: var(--border-hi); transform: scale(1.05); }
 
-/* Grid — 2x2 */
+/* Grid 2x2 */
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
 .grid-item { padding: 22px; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; }
 .grid-item-label { font-size: 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; margin-bottom: 8px; }
@@ -124,13 +129,12 @@ body {
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 1000; }
 .modal-content { border-radius: 22px; padding: 24px; max-width: 500px; width: 92%; max-height: 80vh; overflow-y: auto; }
 
-/* ========== NOTES ICON ========== */
+/* Notes icon */
 .notes-icon-wrapper {
   width: 42px; height: 42px; border-radius: 50%;
   background: linear-gradient(145deg, var(--primary-green), #1a5c1a);
   box-shadow: 0 0 16px rgba(52,199,89,0.5);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .notes-icon-wrapper svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 2; }
 
@@ -161,4 +165,137 @@ body {
   .grid { grid-template-columns: 1fr 1fr; gap: 10px; }
   .grid-item { min-height: 120px; padding: 16px; }
   .grid-item-value { font-size: 24px; }
+}
+/* ========== WATER WIDGET ========== */
+.water-tile {
+  position: relative;
+  overflow: hidden;
+}
+
+.water-widget {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.water-glass {
+  width: 50px;
+  height: 80px;
+  border-radius: 8px 8px 16px 16px;
+  border: 2px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.03);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.water-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(180deg, #34C759 0%, #1a5c1a 100%);
+  transition: height 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow: visible;
+}
+
+/* ========== WATER WIDGET ========== */
+.water-tile {
+  position: relative;
+  overflow: hidden;
+}
+
+.water-widget {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.water-glass {
+  width: 56px;
+  height: 90px;
+  border-radius: 10px 10px 18px 18px;
+  border: 2px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.2);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.water-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(180deg, #34C759 0%, #1a5c1a 100%);
+  transition: height 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow: hidden;
+}
+
+/* ========== WATER WIDGET ========== */
+.water-tile {
+  position: relative;
+  overflow: hidden;
+}
+
+.water-widget {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.water-glass {
+  width: 56px;
+  height: 90px;
+  border-radius: 10px 10px 18px 18px;
+  border: 2px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.25);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.water-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  transition: height 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.water-fill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #34C759 0%, #1a5c1a 100%);
+}
+
+.water-fill::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -25%;
+  width: 150%;
+  height: 16px;
+  background: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 16' preserveAspectRatio='none'%3E%3Cpath d='M0 8 Q 12 0, 25 8 T 50 8 T 75 8 T 100 8 L100 16 L0 16 Z' fill='%2334C759'/%3E%3C/svg%3E") repeat-x,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 14' preserveAspectRatio='none'%3E%3Cpath d='M0 7 Q 15 14, 30 7 T 60 7 T 90 7 T 120 7 L120 14 L0 14 Z' fill='%2330D158'/%3E%3C/svg%3E") repeat-x;
+  background-size: 50px 16px, 60px 14px;
+  background-position: 0 0, 10px 2px;
+  animation: waterWave 3s linear infinite;
+}
+
+@keyframes waterWave {
+  from { background-position-x: 0, 10px; }
+  to { background-position-x: 50px, 70px; }
+}
+
+.water-pct {
+  font-size: 28px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text);
 }

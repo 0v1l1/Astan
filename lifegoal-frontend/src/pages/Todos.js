@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './Todos.css';
 
 function Todos() {
@@ -7,19 +7,9 @@ function Todos() {
   const [priority, setPriority] = useState('medium');
   const [history, setHistory] = useState({});
 
-  useEffect(() => {
-    loadTodos();
-  }, []);
+  const getKey = useCallback(() => 'todos_' + new Date().toLocaleDateString('ru-RU'), []);
 
-  const getKey = () => 'todos_' + new Date().toLocaleDateString('ru-RU');
-
-  const loadTodos = () => {
-    const saved = localStorage.getItem(getKey());
-    setTodos(saved ? JSON.parse(saved) : []);
-    loadHistory();
-  };
-
-  const loadHistory = () => {
+  const loadHistory = useCallback(() => {
     const all = {};
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
@@ -29,7 +19,17 @@ function Todos() {
       }
     }
     setHistory(all);
-  };
+  }, []);
+
+  const loadTodos = useCallback(() => {
+    const saved = localStorage.getItem(getKey());
+    setTodos(saved ? JSON.parse(saved) : []);
+    loadHistory();
+  }, [getKey, loadHistory]);
+
+  useEffect(() => {
+    loadTodos();
+  }, [loadTodos]);
 
   const saveTodos = (newTodos) => {
     localStorage.setItem(getKey(), JSON.stringify(newTodos));
@@ -65,9 +65,7 @@ function Todos() {
   return (
     <div className="todos">
       <div className="header">
-        <div className="header-title">
-  <span className="dot"></span> Дела на день
-</div>
+        <div className="header-title"><span className="dot"></span> Дела на день</div>
       </div>
 
       <div className="add-todo">

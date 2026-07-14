@@ -112,6 +112,9 @@ class SleepGoal(Base):
     user_id = Column(BigInteger, index=True, unique=True, nullable=True)
     bedtime = Column(String, default="23:00")
     wake = Column(String, default="07:00")
+
+
+class UserProfile(Base):
     __tablename__ = "user_profile"
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(BigInteger, index=True, unique=True, nullable=True)

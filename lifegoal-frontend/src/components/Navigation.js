@@ -8,6 +8,7 @@ function Navigation({ currentPage, setCurrentPage }) {
     { id: 'workouts', icon: 'dumbbell', label: 'Спорт' },
     { id: 'water', icon: 'droplet', label: 'Вода' },
     { id: 'food', icon: 'food', label: 'Еда' },
+    { id: 'sleep', icon: 'moon', label: 'Сон' },
     { id: 'profile', icon: 'person', label: 'Профиль' },
   ];
 
@@ -17,6 +18,7 @@ function Navigation({ currentPage, setCurrentPage }) {
     dumbbell: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 8v8"/><path d="M2 10v4"/><path d="M20 8v8"/><path d="M22 10v4"/><path d="M7 12h10"/><path d="M6 8v8"/><path d="M18 8v8"/></svg>,
     droplet: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/></svg>,
     food: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 3v7a2 2 0 0 0 2 2v9"/><path d="M17 3c-1.5 0-3 1.5-3 4v4h3v10"/></svg>,
+    moon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20.5 14.5A8.5 8.5 0 1 1 9.5 3.5a7 7 0 0 0 11 11Z"/></svg>,
     person: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>,
   };
 

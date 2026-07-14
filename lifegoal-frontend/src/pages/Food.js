@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Food.css';
+import { apiFetch } from '../utils/api';
 
 function Food() {
   const [foods, setFoods] = useState([]);
@@ -26,7 +27,7 @@ function Food() {
 
   const fetchFoods = async () => {
     try {
-      const res = await fetch('https://lftracker.onrender.com/api/food/');
+      const res = await apiFetch('/api/food/');
       const data = await res.json();
       setFoods(data);
     } catch (error) {
@@ -36,7 +37,7 @@ function Food() {
 
   const fetchHistory = async () => {
     try {
-      const res = await fetch('https://lftracker.onrender.com/api/food/history');
+      const res = await apiFetch('/api/food/history');
       const data = await res.json();
       
       // Группируем по дате И типу приёма пищи
@@ -57,7 +58,7 @@ function Food() {
     if (!newFood.trim()) return;
 
     try {
-      const res = await fetch('https://lftracker.onrender.com/api/food/', {
+      const res = await apiFetch('/api/food/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -79,7 +80,7 @@ function Food() {
 
   const deleteFood = async (id) => {
     try {
-      await fetch(`https://lftracker.onrender.com/api/food/${id}`, { method: 'DELETE' });
+      await apiFetch(`/api/food/${id}`, { method: 'DELETE' });
       setFoods(foods.filter(f => f.id !== id));
       fetchHistory();
     } catch (error) {
@@ -89,7 +90,7 @@ function Food() {
 
   const editFood = async (id, newName, newGrams) => {
     try {
-      await fetch(`https://lftracker.onrender.com/api/food/${id}`, {
+      await apiFetch(`/api/food/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

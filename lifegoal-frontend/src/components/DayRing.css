@@ -1,0 +1,110 @@
+.day-ring {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 20px;
+  margin-bottom: 18px;
+}
+
+.day-ring-svg-wrap {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  flex-shrink: 0;
+}
+
+.day-ring-svg-wrap svg {
+  filter: drop-shadow(0 0 18px rgba(0, 0, 0, 0.35));
+}
+
+.day-ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.day-ring-center-disc {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: var(--dark-bg);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 0 0 1px var(--border);
+}
+
+.day-ring-flame {
+  position: relative;
+  font-size: 13px;
+  line-height: 1;
+  margin-bottom: 1px;
+  filter: grayscale(0.15);
+}
+
+.day-ring-streak {
+  position: relative;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.05;
+}
+
+.day-ring-streak-label {
+  position: relative;
+  font-size: 7.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-faint);
+  font-weight: 600;
+  max-width: 54px;
+  line-height: 1.2;
+  margin-top: 1px;
+}
+
+.day-ring-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.day-ring-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+}
+
+.day-ring-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.day-ring-legend-label {
+  color: var(--text-soft);
+  font-weight: 600;
+  flex: 1;
+}
+
+.day-ring-legend-value {
+  color: var(--text);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 380px) {
+  .day-ring { padding: 16px; gap: 14px; }
+  .day-ring-svg-wrap { width: 120px; height: 120px; }
+  .day-ring-svg-wrap svg { width: 120px; height: 120px; }
+  .day-ring-center-disc { width: 50px; height: 50px; }
+  .day-ring-streak { font-size: 18px; }
+}

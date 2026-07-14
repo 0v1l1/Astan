@@ -30,106 +30,43 @@
 }
 
 .priority-select select {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--primary-green);
   color: var(--text-light);
   border-radius: 10px;
-  padding: 8px 10px;
+  padding: 8px 12px;
   cursor: pointer;
-  font-size: 12px;
-}
-
-.recurring-checkbox-inline {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  margin-left: auto;
-}
-
-.recurring-checkbox-inline input[type="checkbox"] {
-  width: 14px;
-  height: 14px;
-  cursor: pointer;
-  accent-color: var(--primary-green);
-}
-
-.recurring-checkbox-inline label {
   font-size: 13px;
-  color: var(--text-light);
   font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
+  outline: none;
+  transition: all 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' stroke='%2334C759' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 30px;
+}
+
+.priority-select select:hover {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 10px rgba(52, 199, 89, 0.2);
+}
+
+.priority-select select:focus {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.15);
+}
+
+.priority-select select option {
+  background: #1a1a2e;
+  color: #fff;
+  font-weight: 500;
+  padding: 8px;
 }
 
 .add-todo .btn {
   width: 100%;
-}
-
-.days-dialog {
-  background: var(--glass-bg);
-  backdrop-filter: blur(30px) saturate(200%);
-  -webkit-backdrop-filter: blur(30px) saturate(200%);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  padding: 16px;
-  margin-bottom: 12px;
-  animation: slideDown 0.2s ease-out;
-}
-
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.days-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
-
-.day-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 8px;
-  border-radius: 10px;
-  transition: all 0.2s;
-}
-
-.day-button:hover {
-  background: rgba(52, 199, 89, 0.08);
-}
-
-.day-circle {
-  width: 36px;
-  height: 36px;
-  border: 2px solid var(--primary-green);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
-
-.day-button.active .day-circle {
-  background-color: var(--primary-green);
-  box-shadow: 0 0 12px rgba(52, 199, 89, 0.4);
-}
-
-.day-checkmark {
-  color: #000;
-  font-size: 18px;
-  font-weight: 900;
-}
-
-.day-label {
-  font-size: 12px;
-  color: var(--text-light);
-  font-weight: 600;
 }
 
 .todos-list {
@@ -175,27 +112,11 @@
   opacity: 0.6;
 }
 
-.todo-checkbox-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-}
-
 .todo-checkbox {
   width: 20px;
   height: 20px;
   cursor: pointer;
   accent-color: var(--primary-green);
-}
-
-.todo-content {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
 .todo-title {
@@ -209,16 +130,6 @@
   text-decoration: line-through;
 }
 
-.todo-edit-input {
-  flex: 1;
-  background: var(--glass-bg);
-  border: 1px solid var(--primary-green);
-  color: var(--text-light);
-  padding: 6px 8px;
-  border-radius: 8px;
-  font-size: 13px;
-}
-
 .todo-priority {
   padding: 3px 8px;
   border-radius: 6px;
@@ -227,18 +138,6 @@
   font-weight: 600;
   text-transform: uppercase;
   opacity: 0.8;
-}
-
-.todo-actions {
-  display: flex;
-  gap: 4px;
-  flex-shrink: 0;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.todo-item:hover .todo-actions {
-  opacity: 1;
 }
 
 .todo-btn {
@@ -297,11 +196,6 @@
   color: var(--text-light);
 }
 
-.expand-icon {
-  color: var(--primary-green);
-  font-size: 10px;
-}
-
 .history-todos {
   padding: 12px;
 }
@@ -313,15 +207,4 @@
   padding: 8px;
   color: var(--text-light);
   font-size: 12px;
-}
-
-.todo-check {
-  color: var(--primary-green);
-  font-weight: bold;
-  min-width: 12px;
-  font-size: 11px;
-}
-
-.todo-check.checked {
-  color: var(--text-secondary);
 }
